@@ -11,9 +11,14 @@
 .links h5 {
   border-bottom: solid 2px #0B920D;
 }
-
 .post-content {
   font-family: 'Open Sans', sans-serif;
+  width: 100vw;
+}
+
+*img {
+  max-width: 100%;
+  display: none;
 }
 
 .post-date {
@@ -25,7 +30,6 @@
 }
 
 #bgimage{
- 
   background-image: url(https://images.pexels.com/photos/886521/pexels-photo-886521.jpeg?cs=srgb&dl=person-s-left-hand-holding-green-leaf-plant-886521.jpg&fm=jpg);
   background-size: cover;
 }
@@ -72,6 +76,3 @@
 .textgrn{
   color: #0B920D;
 }
-
-
-

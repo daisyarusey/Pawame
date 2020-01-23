@@ -44,6 +44,12 @@
   border: solid 7px green;
 }
 
+.onlineUsers {
+  position: fixed;
+  bottom: 0;
+  right: 0;  
+}
+
 .tinted-image {
   background: /* top, transparent red, faked with gradient */
   linear-gradient( rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65)), /* bottom, image */

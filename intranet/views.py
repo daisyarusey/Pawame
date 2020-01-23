@@ -8,10 +8,24 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from datetime import timedelta
 import online_users.models
 from .forms import *
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
 from .filters import UserFilter
 
-def logins(request):
-    if request.method == 'POST':
+
+@receiver(user_logged_in)
+def got_online(sender, user, request, **kwargs):
+    user.profile.is_online = True
+    user.profile.save()
+
+@receiver(user_logged_out)
+def got_offline(sender, user, request, **kwargs):
+    user.profile.is_online = False
+    user.profile.save()
+
+
+def logins (request):
+    if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(email=email, password=password)
@@ -53,11 +67,12 @@ def human_resource(request):
 
 @user_passes_test(lambda u:u.is_active and u.department==2 or u.user_type==1,redirect_field_name=REDIRECT_FIELD_NAME,login_url='login')
 def inventory(request):
-   updates = Updates.objects.filter(department=4).all()[::-1]
-   users = User.objects.order_by('-last_login')
-   comments = Comments.objects.all()
-   commentForm = CommentForm()
-   return render(request, 'inventory.html', locals())
+    updates = Updates.objects.filter(department=4).all()[::-1]
+    users = User.objects.order_by('-last_login')
+    comments = Comments.objects.all()
+    commentForm = CommentForm()
+    return render(request, 'inventory.html', locals())
+
 
 
 

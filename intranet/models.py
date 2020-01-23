@@ -7,6 +7,8 @@ from django.core.cache import cache
 import datetime
 from pawame import settings
 from tinymce.models import HTMLField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class MyUserManager(BaseUserManager):
@@ -76,12 +78,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+    
 
 class Profile(models.Model):
     image = models.ImageField(upload_to='photos/')
     first_name =  models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     user =  models.OneToOneField(User, on_delete=models.CASCADE)
+    is_online = models.BooleanField(default=False)
+    
 
     def save_profile(self):
         self.save()
@@ -102,6 +107,15 @@ class Profile(models.Model):
                 return True
         else:
             return False
+    @receiver(post_save, sender=User)
+    def create_profile(sender, instance,created,**kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+    
+    @receiver(post_save, sender=User)
+    def save_profile(sender, instance, **kwargs):
+        instance.profile.save()
+    
     
 class Updates(models.Model):
     
