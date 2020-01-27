@@ -1,39 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="tinted-image">
-    <div class="text-center">
-      <h1 class="font-weight-bold pt-5 search">
-        PAWAME
-      </h1>
-      <p>
-        Welcome to the Super-Admin custom search.
-      </p>
-    </div>
-    <form method="get">
-      {{filter.form.as_p}}
-      <!-- <button type="submit">Search</button> -->
-    </form>
-    <ul>
-    {% for user in filter.qs %}
-      <li>{{user.username}}</li>
-    {% endfor %}
-    </ul>
+<div class="tinted-image">
+  <div class="text-center">
+    <h1 class="font-weight-bold pt-5 search">
+      PAWAME
+    </h1>
+    <p>
+      Welcome to the Super-Admin custom search.
+    </p>
+  </div>
+  <form method="get" role="search" action="{% url 'searchResults'%}">
     <div class="form-row d-flex justify-content-center">
       <!-- Grid column -->
       <div class="col-7 text-center">
         <!-- Material input -->
         <div class="md-form search-link">
-          <input type="search" class="form-control" name="search_term" id="search_form"
+          <input type="text" class="form-control" name="employee" id="search_form"
             placeholder="Who are you looking For?">
           <a href="searchResults.html"></a>
-            <button class="btn btn-sm btn-transparent font-weight-bold mt-4" type="submit">
-              Search
-            </button>
+          <button class="btn btn-sm btn-transparent font-weight-bold mt-4" type="submit">
+            Search
+          </button>
+
           </a>
         </div>
       </div>
     </div>
-  </div>
+  </form>
+</div>
 
 {% endblock %}

@@ -135,11 +135,17 @@ def postUpdate(request):
     return redirect('updates')
   
 def searchResults(request):
-    users=User.objects.all()
-    user_filter=UserFilter(request.GET,queryset=users) 
-    return render(request,'searchResults.html',{'filter':user_filter})
+    
+    if 'employee' in request.GET and request.GET["employee"]:
 
-
+        search_term = request.GET.get("employee")
+        searched_employees = User.search_employees(search_term)
+        message = f"{search_term}"
+        return render(request, 'searchResults.html', {"message": message, "Employees": searched_employees})
+    else:
+        message = "You haven't searched for any term "
+        return render(request, 'searchResults.html', {"message": message})
+     
 
 #comments
 @login_required(login_url='/accounts/login')

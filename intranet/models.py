@@ -75,6 +75,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
     
+    @classmethod
+    def search_employees(cls,employee):
+        employee = cls.objects.filter(username__icontains = employee)
+        return employee
+    
     @property
     def is_staff(self):
         return self.is_admin
@@ -132,10 +137,13 @@ class Updates(models.Model):
     time_stamp = models.DateTimeField(auto_now=True) 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     department =  models.PositiveSmallIntegerField(choices=UPDATE_TYPES, null=True)
+    status = models.BooleanField(default=False)
     
     @classmethod
     def get_update(cls,id):
         update = get_object_or_404(cls, pk=id) 
+    
+    
         
     def __str__(self):
           return self.title

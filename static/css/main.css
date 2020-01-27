@@ -24,12 +24,10 @@
   font-size: 35px;
 }
 
-#bgimage{
- 
+#bgimage {
   background-image: url(https://images.pexels.com/photos/886521/pexels-photo-886521.jpeg?cs=srgb&dl=person-s-left-hand-holding-green-leaf-plant-886521.jpg&fm=jpg);
   background-size: cover;
 }
-
 
 .postTo {
   background-color: transparent;
@@ -64,37 +62,36 @@
   font-size: 40px;
 }
 
+
 .search-link a {
   color: black;
 }
-.bgcolor{
+
+.bgcolor {
   background-color: #E7E6E2;
 }
 
-#purpose{
+#purpose {
   padding-top: 10px;
 }
 
-.textgrn{
+.textgrn {
   color: #0B920D;
 }
-
 
 .commentForm label {
   display: none;
 }
 
-#nav-left{
+#nav-left {
   color: white;
 }
-
-
 
 #mceu_54-body {
   display: none;
 }
 
-#notification{
+#notification {
   border: 1px solid grey;
   border-radius: 5px;
 }
