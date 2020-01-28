@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'intranet.apps.IntranetConfig',
     'crispy_forms',
     'django_registration',
     'django.contrib.humanize',
@@ -144,7 +143,7 @@ SUMMERNOTE_CONFIG = {
     'iframe': False,
     'summernote': {
         'airMode': False,
-        'width': '100vw',
+        'width': '100%',
         'height': '400',
         'lang': None,
     },

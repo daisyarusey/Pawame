@@ -167,18 +167,8 @@ class Updates(models.Model):
         return None
         
         
-    
-    
-        
     def __str__(self):
           return self.title
-    
-        
-class Updates(models.Model):
-    title =  models.CharField(max_length=50)
-    update = models.TextField()
-    time_stamp = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comments(models.Model):
     comment = models.CharField(max_length=1000)

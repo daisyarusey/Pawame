@@ -2,6 +2,7 @@
 {% block content %}
 <div class="container mt-3">
     <h3 class="text-center font-weight-bolder pt-3 pb-3" style="color: #0B920D;">Notifications</h3>
+    {% if updates %}
     {% for update in updates %}
     <div class="media mt-4 px-1" id="notification" data-toggle="modal" data-target="#notificationModal">
         <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg"
@@ -48,6 +49,44 @@
 
     </div>
     {% endfor %}
+    {% else %}
+
+    <p class="text-center" style="color: #0B920D;">There are no notification now</p>
+
+    {% endif %}
+
+
+    <div class="row onlineUsers">
+        <button id="popover" class="btn btn-sm btn-green ml-auto" title="Employee Online Status" data-toggle="popover"  data-placement="top" data-trigger="focus"> Who's online? </button>
+
+        <div id="popover-content" style="display:none;">
+        {% for user in users %}
+          {% if user.profile.is_online %}
+            <p>
+                {% if user.profile.image %}                 
+                <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.profile.image.url}}" style="width:30px; height:30px;"> 
+                {% else %}
+                 <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                {% endif %}
+
+            {{ user.username }} <span class="ml-3 text-success" style="font-weight: bold;"> Online <span> 
+              <span class="ml-1" style="height: 15px; width: 15px; background-color: #0B920D; border-radius: 50%; display: inline-flex;"></span> <br></p>
+          {% else %}
+            <p>
+                {% if user.profile.image %}                 
+                <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.profile.image.url}}" style="width:30px; height:30px;"> 
+                {% else %}
+                 <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                {% endif %}
+            {{ user.username }} <span class="ml-3 text-dark" style="font-weight: bold;"> Offline <span> 
+            <span class="ml-1" style="height: 15px; width: 15px; background-color: #a9a9a9; border-radius: 50%; display: inline-flex;"></span>
+            <br></p>
+          {% endif %}
+        {% endfor %}
+        
+        </div>
+  </div>
+
 
 </div>
 
