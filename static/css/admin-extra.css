@@ -1,0 +1,29 @@
+.module h2,.module caption,.inline-group{
+    background: black;
+   
+}
+#header{
+background: black;
+font-weight:bold;
+
+
+}
+div.breadcrumbs{
+    background: black;
+}
+#branding h1,#branding h1 a:link,#branding h1 a:visited{
+    color:#0b920d;
+}
+a.section:link,a.section:visited{
+    color:#0b920d;
+    text-decoration: green;
+    font-weight: bold;
+    font-size: small;
+}
+.selector-chosen h2{
+    background:#0b920d!important
+}
+.button,input[type=submit],input[type=button],.submit-row
+input,a.button{
+    background:#0b920d!important
+}

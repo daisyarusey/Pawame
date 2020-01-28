@@ -62,13 +62,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'intranet.apps.IntranetConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'intranet.apps.IntranetConfig',
     'crispy_forms',
     'django_registration',
     'django.contrib.humanize',
@@ -76,14 +76,11 @@ INSTALLED_APPS = [
     'bootstrapform',
     'bootstrap4',
     'tinymce',
-    'sorl.thumbnail',
     'django_summernote',
     'online_users',
     'django_filters',
 
- 
 ]
-
 
 ADMIN_COLORS_BASE_THEME = 'Black'
 ADMIN_COLORS=[
@@ -93,7 +90,6 @@ ADMIN_COLORS=[
     ('Gray','admincolors/css/gray.css'),
     ('Black',('admincolors/css/gray.css','static/css/theme.css')),
 ]
-
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -147,10 +143,13 @@ SUMMERNOTE_CONFIG = {
     'iframe': False,
     'summernote': {
         'airMode': False,
-        'width': '100%',
-        'height': '480',
+        'width': '100vw',
+        'height': '400',
         'lang': None,
-    }
+    },
+        'print': {
+        'stylesheetUrl': 'static/css/main.css',
+    },
 }
 
 # Database
@@ -212,9 +211,8 @@ SUMMERNOTE_THEME = 'bs4'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-FILE_UPLOAD_MAX_MEMORY_SIZE = 100000000
-FILE_UPLOAD_PERMISSIONS  = 0o644
-
+# FILE_UPLOAD_MAX_MEMORY_SIZE = 100000000
+# FILE_UPLOAD_PERMISSIONS  = 0o644
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))

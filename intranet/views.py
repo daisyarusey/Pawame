@@ -8,10 +8,24 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from datetime import timedelta
 import online_users.models
 from .forms import *
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
 from .filters import UserFilter
 
-def logins(request):
-    if request.method == 'POST':
+
+@receiver(user_logged_in)
+def got_online(sender, user, request, **kwargs):
+    user.profile.is_online = True
+    user.profile.save()
+
+@receiver(user_logged_out)
+def got_offline(sender, user, request, **kwargs):
+    user.profile.is_online = False
+    user.profile.save()
+
+
+def logins (request):
+    if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(email=email, password=password)
@@ -37,7 +51,8 @@ def logins(request):
     
 @login_required(login_url='/accounts/login/') 
 def updates(request):
-    updates = Updates.objects.filter(department=1).all()[::-1]
+    updates = Updates.objects.filter(department=1,status=True).all()[::-1]
+    num  = Updates.objects.filter(status=False).all().count()
     users = User.objects.order_by('-last_login')
     comments = Comments.objects.all()
     commentForm = CommentForm()
@@ -53,11 +68,12 @@ def human_resource(request):
 
 @user_passes_test(lambda u:u.is_active and u.department==2 or u.user_type==1,redirect_field_name=REDIRECT_FIELD_NAME,login_url='login')
 def inventory(request):
-   updates = Updates.objects.filter(department=4).all()[::-1]
-   users = User.objects.order_by('-last_login')
-   comments = Comments.objects.all()
-   commentForm = CommentForm()
-   return render(request, 'inventory.html', locals())
+    updates = Updates.objects.filter(department=4).all()[::-1]
+    users = User.objects.order_by('-last_login')
+    comments = Comments.objects.all()
+    commentForm = CommentForm()
+    return render(request, 'inventory.html', locals())
+
 
 
 
@@ -94,7 +110,9 @@ def employees(request):
 
 def notifications(request):
     template='notifications.html'
-    return render(request, template)
+    updates=Updates.objects.filter(status=False).all()[::-1]
+    num  = Updates.objects.filter(status=False).all().count()
+    return render(request, template, locals())
     
 
 def employeeProfile(request):
@@ -120,11 +138,17 @@ def postUpdate(request):
     return redirect('updates')
   
 def searchResults(request):
-    users=User.objects.all()
-    user_filter=UserFilter(request.GET,queryset=users) 
-    return render(request,'searchResults.html',{'filter':user_filter})
+    
+    if 'employee' in request.GET and request.GET["employee"]:
 
-
+        search_term = request.GET.get("employee")
+        searched_employees = User.search_employees(search_term)
+        message = f"{search_term}"
+        return render(request, 'searchResults.html', {"message": message, "Employees": searched_employees})
+    else:
+        message = "You haven't searched for any term "
+        return render(request, 'searchResults.html', {"message": message})
+     
 
 #comments
 @login_required(login_url='/accounts/login')
@@ -141,3 +165,8 @@ def comments(request, update_id):
             form.save()
         return redirect ('updates')
     return render (request, 'updates.html', locals())
+
+def approved(request, id):
+    Updates.approved(id)
+    return redirect('notifications')
+

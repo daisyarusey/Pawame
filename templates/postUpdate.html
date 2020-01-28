@@ -7,37 +7,6 @@
 
 <div class="container">
   <div class="row">
-  <!-- <div class="col pt-3">
-
-        <h3 class="text-center font-weight-bold"> Post an update </h3>
-        <hr>
-
-            <div class="md-form d-flex">
-                <input id="input-char-counter" type="text" length="10" class="form-control" style="width: 70%;">
-                <label for="input-char-counter"> Update Title </label>
-
-                <select class="browser-default custom-select mx-auto postTo" style="width: 25%;">
-                    <option selected> Choose dashboard to post to: </option>
-                    <option value="1"> General </option>
-                    <option value="2">Human Resource</option>
-                    <option value="3">Finance</option>
-                    <option value="3">Inventory</option>
-                    <option value="3">Marketing</option>
-                    <option value="3">Information Technology</option>
-                </select>
-            </div>            
-     
-        <form method="post" class="summernote">
-          <textarea id="my-summernote" name="editordata"></textarea>
-        </form>
-
-        <button class="btn btn-md btn-green"> Publish </button>
-
-      </div>
-  </div> --> 
-
-
-  <!-- TESTING REGULAR DJANGO FORM -->
     <div class="col pt-3">
 
       <form action="{% url 'postUpdate' %}" method="post" enctype="multipart/form-data">
@@ -50,7 +19,6 @@
         </form>  
     
     </div>
-  <!-- END OF TESTING -->
 </div>
 
 {% endblock %}

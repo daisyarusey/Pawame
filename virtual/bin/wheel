@@ -1,4 +1,4 @@
-#!/home/moringa/Documents/Pawame/virtual/bin/python
+#!/home/moringa/Documents/pawame/virtual/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
