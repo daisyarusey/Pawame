@@ -16,6 +16,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+.updateimg {
+  display: none;
+}
+
 .post-date {
   font-family: 'Lora', serif;
 }
@@ -36,10 +40,6 @@
   border-radius: 0;
   outline: none;
   box-shadow: none;
-}
-
-.onlineUser {
-  border: solid 7px green;
 }
 
 .onlineUsers {

@@ -26,6 +26,10 @@ $('#my-summernote').summernote({
 });
 
 
+$( document ).ready(function() {
+  $('img').addClass('updateimg');
+});
+
 const commonNames = ["Yovanka", "Ysa", "Yudit", "Yujin", "Yukiko", "Yukta", "Yuleni", "Yuliya", "Yun", "Yuneicy", "Yurika", "Yuriria", "Yury", "Zachariah", "Zafirah", "Zailey", "Zakoria", "Zakya", "Zalaya", "Zamanta", "Zamariah", "Zamiah", "Zamiyah", "Zanaii", "Zanaria", "Zanayah", "Zareah", "Zareen", "Zarelia", "Zarreah", "Zaryia", "Zawadi", "Zayanna", "Zaydee", "Zaylee", "Zehava", "Zeltzin", "Zhariah", "Zikiria", "Zineb", "Zionah", "Ziyana", "Zlata", "Zlaty", "Zobia", "Zoei", "Zona", "Zophia", "Zori", "Zorina", "Zorriah", "Zorya", "Zoye", "Zsazsa", "Zyah", "Zyaira", "Zykeia", "Zykeriah", "Zykiera", "Zyonna", "Zyra"];
 
 function autocomplete(inp, arr) {
@@ -49,7 +53,7 @@ function autocomplete(inp, arr) {
     for (i = 0; i < arr.length; i++) {
       /*check if the item starts with the same letters as the text field value:*/
       if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-        /*create a DIV element for each matching element:*/
+        /*create  a DIV element for each matching element:*/
         b = document.createElement("DIV");
         /*make the matching letters bold:*/
         b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
@@ -124,4 +128,3 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
-

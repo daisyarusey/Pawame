@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
 <div class="container">
   <h3 class="text-center font-weight-bolder pt-3 pb-3 " style="color: #0B920D;">
 General Updates  </h3>
@@ -12,18 +13,20 @@ General Updates  </h3>
 
 {% for update in updates %}
 
+  <div class="row">
 
-  <div class="media">
-  {% if update.user.profile.image %}
-    <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
-      src="{{update.user.profile.image.url}}" height="100px" width="100px" alt="Avatar">
-  {% else %}
-      <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
-  {% endif %}
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      {% if update.user.profile.image %}
+        <img class="d-flex rounded-circle avatar z-depth-1-quater mr-3"
+          src="{{update.user.profile.image.url}}" height="100px" width="100px" alt="Avatar">
+      {% else %}
+          <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
+      {% endif %}
+    </div>
 
 
-    <div class="media-body">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
       <h5 class="mt-0 font-weight-bold dark-text post-content">{{ update.title }}</h5>
 
       <p class="post-content" style="max-width: 100%;">  
@@ -39,7 +42,7 @@ General Updates  </h3>
           <div class="accordion" id="accordionExample275">
                   <button class="btn btn-sm btn-link" type="button" data-toggle="collapse" href="#collapse{{ update.id}}"
                     aria-expanded="false" aria-controls="collapseOne2">
-                    View all {{ update.comments_set.all|length }} comment{{update.comments_set.all|pluralize}}
+                    View {{ update.comments_set.all|length }} comment{{update.comments_set.all|pluralize}}
                   </button>
               <div id="collapse{{ update.id }}" class="collapse">
                   
@@ -68,21 +71,21 @@ General Updates  </h3>
             
           </div>
       
-      <div class="media mt-3 shadow-textarea">
+      <div class="row mt-3 shadow-textarea">
 
-        {% if request.user.profile.image %}
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            {% if request.user.profile.image %}
 
-        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
-          src="{{request.user.profile.image.url}}" height="70px" width="70px"
-          alt="Generic placeholder image">
-        
-        {% else %}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="70px" width="70px" alt="avatar mx-auto white" class="rounded-circle img-fluid avatar z-depth-1-half mr-3">
+            <img class="d-flex rounded-circle avatar z-depth-1-half"
+              src="{{request.user.profile.image.url}}" height="40px" width="40px"
+              alt="Generic placeholder image">
+            
+            {% else %}
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="40px" width="40px" alt="avatar mx-auto white" class="rounded-circle img-fluid avatar z-depth-1-half">
+            {% endif %}
+        </div>
 
-        {% endif %}
-
-
-        <div class="media-body">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 pl-0">
           <div class="form-group basic-textarea rounded-corners commentForm">
 
             <form action="{% url 'comments' update_id=update.id %}" method="post">
@@ -100,7 +103,11 @@ General Updates  </h3>
     </div>
   </div>
 
+
 {% endfor %}
+
+
+
     <div class="row onlineUsers">
           <button id="popover" class="btn btn-sm btn-green ml-auto" title="Employee Online Status" data-toggle="popover"  data-placement="top" data-trigger="focus"> Who's online? </button>
 

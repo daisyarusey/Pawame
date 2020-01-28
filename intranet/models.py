@@ -65,13 +65,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username', 'user_type']
     
     objects = MyUserManager()
-    
-
 
     def __str__(self):
         return self.username
+
     def has_perm(self, perm, obj=None):
         return True
+
     def has_module_perms(self, app_label):
         return True
     
@@ -79,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def search_employees(cls,employee):
         employee = cls.objects.filter(username__icontains = employee)
         return employee
-    
+   
     @property
     def is_staff(self):
         return self.is_admin
@@ -95,7 +95,18 @@ class Profile(models.Model):
 
     def save_profile(self):
         self.save()
-    
+
+    def delete_profile(self):
+        self.delete()
+
+    @classmethod
+    def update_profile(cls, id, first_name):
+        cls.objects.filter(pk = id).update(first_name=first_name)
+        new_name_object = cls.objects.get(first_name=first_name)
+        new_name = new_name_object.first_name
+        return new_name
+
+
     def __str__(self):
         return self.first_name
     
@@ -141,13 +152,33 @@ class Updates(models.Model):
     
     @classmethod
     def get_update(cls,id):
-        update = get_object_or_404(cls, pk=id) 
+        update = get_object_or_404(cls, pk=id)
+         
+    @classmethod
+    def approved(cls, id):
+        update =  get_object_or_404(cls, pk=id)
+        update.status = True
+        update.save()
+        return update.status
+    
+    @classmethod
+    def dissaprove(cls,id):
+        update = get_object_or_404(cls, pk=id).delete()
+        return None
+        
+        
     
     
         
     def __str__(self):
           return self.title
     
+        
+class Updates(models.Model):
+    title =  models.CharField(max_length=50)
+    update = models.TextField()
+    time_stamp = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comments(models.Model):
     comment = models.CharField(max_length=1000)
@@ -163,5 +194,6 @@ class Comments(models.Model):
     def save_comment(self):
         self.save()
         
+
     def __str__(self):
       return self.comment

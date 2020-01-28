@@ -6,13 +6,24 @@
     <div class="row justify-content-center pt-4">
 
 
+
+
         <!-- insert search results if statement then start loop -->
         {% if Employees %}
         {% for employee in Employees %}
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" data-toggle="modal" data-target="#modalLoginAvatar">
             <div class="avatar mx-auto white text-center">
-                <img src="{{ employee.profile.image.url }}" height="200px" width="200px" alt="avatar mx-auto white"
-                    class="rounded-circle img-fluid" style="border-radius: 50%;">
+
+
+
+
+                     {% if employee.user.profile.image %}
+              <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
+                src="{{employee.user.profile.image.url}}" height="100px" width="100px" alt="Avatar">
+            {% else %}
+                <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
+            {% endif %}
                 <a href="#">
                     <h6 class="font-weight-light pt-1">{{employee.username}} <br> <b> {{employee.user_type}}</b> </h6>
                 </a>

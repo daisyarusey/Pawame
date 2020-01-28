@@ -14,9 +14,18 @@
 {% for update in updates %}
 
 
+
+
   <div class="media">
+
+  {% if update.user.profile.image %}
     <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
       src="{{update.user.profile.image.url}}" height="100px" width="100px" alt="Avatar">
+  {% else %}
+      <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
+  {% endif %}
+  
     <div class="media-body">
       <h5 class="mt-0 font-weight-bold dark-text post-content">{{ update.title }}</h5>
       <p class="post-content">  

@@ -51,7 +51,8 @@ def logins (request):
     
 @login_required(login_url='/accounts/login/') 
 def updates(request):
-    updates = Updates.objects.filter(department=1).all()[::-1]
+    updates = Updates.objects.filter(department=1,status=True).all()[::-1]
+    num  = Updates.objects.filter(status=False).all().count()
     users = User.objects.order_by('-last_login')
     comments = Comments.objects.all()
     commentForm = CommentForm()
@@ -109,7 +110,9 @@ def employees(request):
 
 def notifications(request):
     template='notifications.html'
-    return render(request, template)
+    updates=Updates.objects.filter(status=False).all()[::-1]
+    num  = Updates.objects.filter(status=False).all().count()
+    return render(request, template, locals())
     
 
 def employeeProfile(request):
@@ -162,3 +165,8 @@ def comments(request, update_id):
             form.save()
         return redirect ('updates')
     return render (request, 'updates.html', locals())
+
+def approved(request, id):
+    Updates.approved(id)
+    return redirect('notifications')
+

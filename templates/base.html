@@ -23,6 +23,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <style>
+    .post-content p img {
+        max-width: 100%;
+    }
+    </style>
+
     {% endblock %}
 </head>
 
@@ -68,12 +75,12 @@
         </script>    
 
         <!-- summernote image upload -->
-        <script>
+        <!--<script>
             $('#summernote').summernote('insertImage', url, function ($image) {
                 $image.css('width', $image.width() / 3);
                 $image.attr('data-filename', 'retriever');
             });
-        </script>
+        </script>  -->
 
     {% endblock %}
 </body>
