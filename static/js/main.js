@@ -30,6 +30,26 @@ $( document ).ready(function() {
   $('img').addClass('updateimg');
 });
 
+
+// commenting feature ajax
+$(document).ready(function(){
+  $('form').submit(function(event){
+    event.preventDefault()
+    form = $("form")
+
+    $.ajax({
+      'url':'/ajax/comments/',
+      'type':'POST',
+      'data':form.serialize(),
+      'dataType':'json',
+      'success': function(data){
+        alert(data['success'])
+      },
+    })
+  }) 
+}) 
+
+
 const commonNames = ["Yovanka", "Ysa", "Yudit", "Yujin", "Yukiko", "Yukta", "Yuleni", "Yuliya", "Yun", "Yuneicy", "Yurika", "Yuriria", "Yury", "Zachariah", "Zafirah", "Zailey", "Zakoria", "Zakya", "Zalaya", "Zamanta", "Zamariah", "Zamiah", "Zamiyah", "Zanaii", "Zanaria", "Zanayah", "Zareah", "Zareen", "Zarelia", "Zarreah", "Zaryia", "Zawadi", "Zayanna", "Zaydee", "Zaylee", "Zehava", "Zeltzin", "Zhariah", "Zikiria", "Zineb", "Zionah", "Ziyana", "Zlata", "Zlaty", "Zobia", "Zoei", "Zona", "Zophia", "Zori", "Zorina", "Zorriah", "Zorya", "Zoye", "Zsazsa", "Zyah", "Zyaira", "Zykeia", "Zykeriah", "Zykiera", "Zyonna", "Zyra"];
 
 function autocomplete(inp, arr) {

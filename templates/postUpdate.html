@@ -9,16 +9,37 @@
   <div class="row">
     <div class="col pt-3">
 
-      <form action="{% url 'postUpdate' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% bootstrap_form form layout='inline' %}
+      <form action="{% url 'postUpdate' %}" method="post" enctype="multipart/form-data" onsubmit="awaitingApproval()">
+        {% csrf_token %}
+        {% bootstrap_form form layout='inline' %}
+        <div class="form-group">
+          <input type="submit" class="btn btn-green btn-sm my-2" value="Publish">
+        </div>
+      </form>
 
-            <div class="form-group">
-            <input type="submit" class="btn btn-md btn-green btn-sm my-2" value="Publish">
-            </div>
-        </form>  
-    
+      <!-- helpful message "update awaiting approval" -->
+        <div id="approvalsnackbar" class="btn btn-sm btn-green ml-auto"> Update awaiting approval before publishing. </div>
+      <!-- end of helpful msg-->
+
+    <!-- {% if messages %}
+          {% for message in messages %}
+              {{ message }}
+          {% endfor %}
+      {% endif %} -->
+      
     </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
 </div>
 
-{% endblock %}
+  {% endblock %}

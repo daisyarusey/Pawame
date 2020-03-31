@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div class="container">
+  <h4 class="text-center font-weight-bold"> My Profile </h4>
+  <hr>
+
+  <!--Card-->
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card card-personal mb-4">
+
+        <!--Card image-->
+        <div class="view mx-auto mt-1">
+          {% if user.image %}
+          <img class="card-img-top" style="border-radius: 50%; height: 150px; width: 150px;" src="{{user.image.url}}"
+            alt="Card image cap">
+          {% else %}
+          <img class="card-img-top" style="border-radius: 50%; height: 150px; width: 150px;"
+            src="https://mdbootstrap.com/img/Photos/Avatars/avatar.jpg" alt="Card image cap">
+          {% endif %}
+          <a href="#!">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!--Card image-->
+
+        <!--Card content-->
+        <div class="card-body text-center">
+          <!--Title-->
+          <a>
+            <h4 class="card-title">James K</h4>
+            <p class="card-text pb-1">{{user.email}}</p>
+
+          </a>
+          <form action="{% url 'updateProfilePic' %}" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="editProfile">
+              {% bootstrap_form editProfileForm layout='inline '%}
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-dark-green"><i class="far fa-edit mr-1"
+                aria-hidden="true"></i>Edit
+              Profile</button type="submit">
+          </form>
+
+          <!--Text-->
+          <hr>
+          <p class="card-meta">Pawame</p>
+        </div>
+        <!--Card content-->
+
+      </div>
+    </div>
+  </div>
+
+  <!--Card-->
+
+  {% endblock %}

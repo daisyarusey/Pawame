@@ -23,33 +23,32 @@
         <div class="row d-flex justify-content-center" id="login">
             <div class="col-md-3 text-center mt-4" id="bgimage">
                 <div class="mt-5 pb-5">
-                    <h3>PAWAME</h3>
-                    <p>Delivering more than just energy</p>
+                    <h2 style="color: #034724ec;" class="font-weight-bold">PAWAME</h2>
+                    <hr>
+                    <p class="font-weight-bold">Delivering more than just energy</p>
                 </div>
-                <div class="mt-5">
-                    <h5>OUR PURPOSE</h5>
-                    <p>To provide energy access as a gateway to financial empowerment and limitless opportunity in
-                        Sub-Saharan
-                        Africa.</p>
+                <div class="mt-4">
+                    <h2 style="color:#034724ec;" class="font-weight-bold">OUR PURPOSE</h2>
+                    <hr>
+                    <p class="font-weight-bold">To provide energy access as a gateway to financial empowerment and limitless opportunity in Sub-Saharan Africa.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-5">
                 <form class="text-center  p-5" method="post" action="{% url 'login' %}">
                     {% csrf_token %}
-
-                    <a href="/admin" class="btn btn-blue btn-rounded">Admin</a>
 
                     <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar.jpg" height="90px" width="90px"
                         alt="avatar mx-auto white" class="rounded-circle img-fluid">
                     <div class="md-form">
                         <label for="email" class="mb-5">Email</label>
-                        <input type="text" name="email" , required="required" id="email">
+                        <input type="text" name="email" required id="email" class="form-control">
                     </div>
                     <div class="md-form">
                         <label for="passwd" class="mb-5">Password</label>
-                        <input type="password" required="required" name="password" id="passwd">
+                        <input type="password" required name="password" id="passwd" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-green btn-rounded">Log in</button>
+                    <button type="submit" class="btn btn-sm btn-dark-green btn-rounded font-weight-bold mb-3">Log in</button>
+                    <p style="font-style:italic;"> <a href="/admin" class="font-weight-bold green-text">Log in as Admin</a></p>
                 </form>
             </div>
         </div>

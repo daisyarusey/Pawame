@@ -1,0 +1,1 @@
+web: gunicorn pawame.wsgi --log-file -

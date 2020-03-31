@@ -1,3 +1,0 @@
-users=User.objects.all()
-    user_filter=UserFilter(request.GET,queryset=users) 
-    return render(request,'searchResults.html',{'filter':user_filter})

@@ -2,52 +2,107 @@
 {% block content %}
 <div class="container mt-3">
     <h3 class="text-center font-weight-bolder pt-3 pb-3" style="color: #0B920D;">Notifications</h3>
+    {% if updates %}
     {% for update in updates %}
-    <div class="media mt-4 px-1" id="notification" data-toggle="modal" data-target="#notificationModal">
-        <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg"
-            alt="Generic placeholder image">
+    <div class="media mt-4 px-1" id="notification" data-toggle="modal" data-target="#notificationModal{{update.id}}">
+        {% if update.user.image %}
+            <img class="card-img-100 d-flex z-depth-1 mr-3"
+          src="{{update.user.image.url}}" height="100px" width="100px" alt="Avatar">
+        {% else %}
+            <img class="card-img-100 d-flex z-depth-1 mr-3"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
+        {% endif %}
         <div class="media-body">
-            <h5 class="font-weight-bold mt-0">
-                <a href="">Daisy</a>
-            </h5>
+    
 
             <h6>{{update.title}}</h6>
-            <p>{{update.update | safe}}</p>
+            <p>{{update.update |truncatechars:200 | safe}}</p>
+
+            {% if update.department == 1 %}
+            <p class="text-dark"> To be published on the <strong>General Dashboard</strong> </p>
+            {% elif update.department == 2 %}
+            <p class="text-dark"> To be pushlised on the <strong>Human Resource Dashboard</strong> </p>
+            {% elif update.department == 3 %}
+            <p class="text-dark"> To be published on the <strong>Information Technology Dashboard</strong></p>
+            {% elif update.department == 4 %}
+            <p class="text-dark"> To be published on the <strong>Inventory Department</strong> </p>
+            {% elif update.department == 5 %}
+            <p class="text-dark"> To be published on the <strong>Marketing Dashboard</strong></p>
+            {% elif update.department == 6 %}
+            <p class="text-dark"> To be published on the <strong>Finance Dashboard</strong> </p>
+            {% endif %}
 
         </div>
 
     </div>
     <!-- modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Notifications" id="notificationModal">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Notifications" id="notificationModal{{update.id}}">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title font-weight-bold dark-text post-content text-center"
-                        id="notificationModalTittle">Meeting</h5>
+                        id="notificationModalTittle"> {{ update.title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="post-content">
-                        A meeting has been scheduled for 30th January 2019. The meeting is meant to discuss the months
-                        activities.<br> All members are asked to attend.
+                        {{update.update| safe}}
                     </p>
 
                     <h6 class="text-muted pt-2 post-date">
-                        <i>Posted by:HR admin on Jan 12 2020</i>
+                        <i>Posted by: {{user.username}} {{update.time_stamp|timesince}} ago</i>
                     </h6>
 
                 </div>
                 <div class="modal-footer justify-content-center">
                     <a href="{% url 'approve' update.id%}" class="btn btn-success btn-sm">Approve</a>
-                    <button type="button" class="btn btn-danger btn-sm">Disapprove</button>
+                    <a href="{% url 'disapprove' update.id%}" class="btn btn-danger btn-sm">Disapprove</a>
                 </div>
             </div>
         </div>
 
     </div>
     {% endfor %}
+    {% else %}
+
+    <p class="text-center" style="color: #0B920D;">There are no notifications now</p>
+
+    {% endif %}
+
+
+    <div class="row onlineUsers">
+        <button id="popover" class="btn btn-sm btn-green ml-auto" title="Employee Online Status" data-toggle="popover"  data-placement="top" data-trigger="focus"> Who's online? </button>
+
+        <div id="popover-content" style="display:none;">
+        {% for user in users %}
+          {% if user.is_online %}
+            <p>
+                {% if user.image %}                 
+                <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.image.url}}" style="width:30px; height:30px;"> 
+                {% else %}
+                 <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                {% endif %}
+
+            {{ user.username }} <span class="ml-3 text-success" style="font-weight: bold;"> Online <span> 
+              <span class="ml-1" style="height: 15px; width: 15px; background-color: #0B920D; border-radius: 50%; display: inline-flex;"></span> <br></p>
+          {% else %}
+            <p>
+                {% if user.image %}                 
+                <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.image.url}}" style="width:30px; height:30px;"> 
+                {% else %}
+                 <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                {% endif %}
+            {{ user.username }} <span class="ml-3 text-dark" style="font-weight: bold;"> Offline <span> 
+            <span class="ml-1" style="height: 15px; width: 15px; background-color: #a9a9a9; border-radius: 50%; display: inline-flex;"></span>
+            <br></p>
+          {% endif %}
+        {% endfor %}
+        
+        </div>
+  </div>
+
 
 </div>
 

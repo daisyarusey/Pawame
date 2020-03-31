@@ -1,49 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<table>
-  <tr>
-    <th>Last Seen</th>
-    <td>{% if profile.last_seen %}{{ profile.last_seen|timesince }}{% else %}awhile{% endif %} ago</td>
-  </tr>
-  <tr>
-    <th>Online</th>
-    <td>{% if profile.online %}<p style="background-color: green;">online</p>{% endif %}</td>
-  </tr>
-</table>
-
 <div class="container">
-  <h4 class="text-center font-weight-bold pt-3"> HUMAN RESOURCE</h4>
+  <h4 class="text-center font-weight-bold pt-2"> My Profile </h4>
   <hr>
   <div class="row d-flex justify-content-center">
     <div class="col-md-4">
       <div class="text-center">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" height="150px" width="150px"
-          class="rounded-circle" alt="woman avatar">
+
+                  {% if user.image %}                 
+                  <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.image.url}}" style="width:150px; height:150px;"> 
+                  {% else %}
+                   <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:150px; height:150px;"> 
+                  {% endif %}
       </div>
 
-      <div class="md-form">
-        <input type="email" id="name" class="form-control">
-        <label for="name">Name</label>
+      <div class="text-center mt-2">
+        <p> {{user.username}}</p>
+      
+        <a href="{% url 'editProfile' %}" class="btn btn-sm btn-outline-dark-green"> Edit my profile </a>
       </div>
-      <div class="md-form">
-        <input type="email" id="email" class="form-control">
-        <label for="email">E-mail</label>
-      </div>
-      <div class="md-form">
-        <input type="email" id="bio" class="form-control">
-        <label for="bio">Bio</label>
-      </div>
-      <div class="file-field mb-2">
-        <div class="btn btn-outline-green btn-sm">
-          <input type="file">
-        </div>
-        <!-- <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload your file">
-          </div>
-        </div> -->
-      </div>
-      <button class="btn btn-sm btn-green">EDIT</button>
+      
+      
     </div>
   </div>
 

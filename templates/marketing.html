@@ -1,36 +1,137 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
 
 {% block content %}
 
+
 <div class="container">
-    <h3 class="text-center font-weight-bolder pt-3 pb-3" style="color: #0B920D;">
-      MARKETING <hr>
-    </h3>
+  <h3 class="text-center font-weight-bolder pt-3 pb-3 " style="color: #0B920D;">
+Marketing Department </h3>
+  <hr>
 
-    <div class="media">
-      <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
-        src="https://mdbootstrap.com/img/Photos/Avatars/avatar-3.jpg" alt="Avatar">
-      <div class="media-body">
-        <h5 class="mt-0 font-weight-bold dark-text post-content">Monthly Allowances</h5>
-        <p class="post-content"> I am pleased to share that you will receive a 5% salary increase. This increase is effective for 12-month employees beginning February 2020.</p>
-        <h6 class="font-weight-bold pt-2">
-          <i>Posted by:HOD on Jan 13 2020</i>
-        </h6>
+{% if updates %}
 
-        <a href="#">view all comments</a>
-        <div class="media mt-3 shadow-textarea">
+{% for update in updates %}
+
+  <div id="{{update.id}}" class="row mt-5">
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      {% if update.user.image %}
+        <img class="d-flex rounded-circle avatar z-depth-1-quater mr-3"
+          src="{{update.user.image.url}}" height="100px" width="100px" alt="Avatar">
+      {% else %}
           <img class="d-flex rounded-circle avatar z-depth-1-half mr-3"
-            src="https://mdbootstrap.com/img/Photos/Avatars/avatar-7.jpg" alt="Generic placeholder image">
-          <div class="media-body">
-            <div class="form-group basic-textarea rounded-corners">
-              <textarea class="form-control z-depth-1" id="exampleFormControlTextarea345" rows="3"
-                placeholder="Write your comment..."></textarea>
-            </div>
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="100px" width="100px" alt="Avatar">
+      {% endif %}
+    </div>
+
+
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+      <h5 class="mt-0 font-weight-bold dark-text post-content">{{ update.title }}</h5>
+
+      <p class="post-content" style="max-width: 100%;">  
+      {% autoescape on %}
+        {{ update.update|safe }}
+      {% endautoescape %}
+      </p>
+
+      <h6 class="text-muted pt-2 post-date">
+        <i>Posted by {{ update.user }}: {{ update.time_stamp|timesince }} ago </i>
+      </h6>
+
+          <div class="accordion" id="accordionExample275">
+                  <button class="btn btn-sm btn-link" type="button" data-toggle="collapse" href="#collapse{{ update.id}}"
+                    aria-expanded="false" aria-controls="collapseOne2">
+                    View {{ update.comments_set.all|length }} comment{{update.comments_set.all|pluralize}}
+                  </button>
+              <div id="collapse{{ update.id }}" class="collapse">
+                  
+                  {% for comment in update.comments_set.all %}
+
+                  <p> 
+
+                  {% if comment.user.image %}
+
+                  
+                  <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{comment.user.image.url}}" style="width:30px; height:30px;"> 
+
+                  {% else %}
+
+                   <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+
+                  {% endif %}
+                  
+                  <strong> {{ comment.user }}</strong> said: {{ comment.comment }} <br>
+                  <span class="text-muted"> {{comment.date_posted|timesince}} ago </span>
+                  </p>
+
+                  {% endfor %}
+
+              </div>
+            
           </div>
+      
+      <div class="row mt-3 shadow-textarea">
+
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 d-flex">
+            {% if request.user.image %}
+
+            <img class="d-flex rounded-circle avatar z-depth-1-half"
+              src="{{request.user.image.url}}" height="40px" width="40px"
+              alt="Generic placeholder image">
+            
+            {% else %}
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="40px" width="40px" alt="avatar mx-auto white" class="rounded-circle img-fluid avatar z-depth-1-half">
+            {% endif %}
+
+
+            <a href="{% url 'commenting' update.id%}" style="color: #0B920D"><i class="far fa-comment fa-lg ml-3" aria-hidden="true"></i> Add Comment </a> 
+
         </div>
+
+  
       </div>
     </div>
-  
   </div>
+
+{% endfor %}
+
+{% else %}
+    <p class="text-center" style="color: #0B920D;">No updates posted yet </p>
+{% endif %}
+
+    <div class="row onlineUsers">
+          <button id="popover" class="btn btn-sm btn-green ml-auto" title="Employee Online Status" data-toggle="popover"  data-placement="top" data-trigger="focus"> Who's online? </button>
+
+          <div id="popover-content" style="display:none;">
+          {% for user in users %}
+            {% if user.is_online %}
+              <p>
+                  {% if user.image %}                 
+                  <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.image.url}}" style="width:30px; height:30px;"> 
+                  {% else %}
+                   <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                  {% endif %}
+
+              {{ user.username }} <span class="ml-3 text-success" style="font-weight: bold;"> Online <span> 
+                <span class="ml-1" style="height: 15px; width: 15px; background-color: #0B920D; border-radius: 50%; display: inline-flex;"></span> <br></p>
+            {% else %}
+              <p>
+                  {% if user.image %}                 
+                  <img class="rounded-circle avatar z-depth-1-half mr-1" src="{{user.image.url}}" style="width:30px; height:30px;"> 
+                  {% else %}
+                   <img class="rounded-circle avatar z-depth-1-half mr-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" style="width:30px; height:30px;"> 
+                  {% endif %}
+              {{ user.username }} <span class="ml-3 text-dark" style="font-weight: bold;"> Offline <span> 
+              <span class="ml-1" style="height: 15px; width: 15px; background-color: #a9a9a9; border-radius: 50%; display: inline-flex;"></span>
+              <br></p>
+            {% endif %}
+          {% endfor %}
+          
+          </div>
+    </div>
+  
+</div>
 
 {% endblock %}

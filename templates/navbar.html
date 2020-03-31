@@ -1,5 +1,4 @@
 <!--Navbar -->
-
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark elegant-color lighten-2">
   <a class="navbar-brand pawame" href="/" style="color: #42a949;">PAWAME</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
@@ -8,7 +7,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link mr-2" href="{% url 'updates' %}">Home
         </a>
       </li>
@@ -26,64 +25,57 @@
         </div>
       </li>
       {% endif %}
-
       {% if request.user.user_type == 1 and request.user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="/employees">Employees</a>
       </li>
       {% endif %}
-
       {% if request.user.department == 1 %}
       <li class="nav-item">
         <a class="nav-link" href="/human_resource">Human Resource</a>
       </li>
       {% endif %}
-
       {% if request.user.department == 3 %}
       <li class="nav-item">
         <a class="nav-link" href="/finance">Finance</a>
       </li>
       {%  endif %}
-
-
-
-      <form class="form-inline center-search">
-
-
-        {% if request.user.department == 2 %}
-        <li class="nav-item">
-          <a class="nav-link" href="/inventory">Inventory</a>
-        </li>
-        {% endif %}
-
-        {% if request.user.department == 4 %}
-        <li class="nav-item">
-          <a class="nav-link" href="/marketing">Marketing</a>
-        </li>
-        {% endif %}
-
-        {% if request.user.department == 5 %}
-        <li class="nav-item">
-          <a class="nav-link" href="/information">Information Technology</a>
-        </li>
-        {% endif %}
+      {% if request.user.department == 2 %}
+      <li class="nav-item">
+        <a class="nav-link" href="/inventory">Inventory</a>
+      </li>dropdown
+      {% endif %}
+      {% if request.user.department == 4 %}
+      <li class="nav-item">
+        <a class="nav-link" href="/marketing">Marketing</a>
+      </li>
+      {% endif %}
+      {% if request.user.department == 5 %}
+      <li class="nav-item">
+        <a class="nav-link" href="/information">Information Technology</a>
+      </li>
+      {% endif %}
     </ul>
-
     <ul class="navbar-nav mr-0 nav-flex-icons">
       {% if request.user.user_type == 1 and request.user.is_authenticated %}
       <li class="nav-item">
-        <a href="/notifications" class="nav-link waves-effect waves-light mt-1">
-          <i class="far fa-bell"></i>({{num}})
+        <a href="/notifications" class="nav-link waves-effect waves-light">
+          <i class="far fa-bell"></i> ({{num}})
         </a>
       </li>
       {% endif %}
     </ul>
-    <ul class="nav-item avatar dropdown mt-3" id="nav-left">
-      <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">{{request.user.username}}
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
-          height="30px" width="30px" alt="avatar image">
 
+    <ul class="nav-item avatar dropdown mt-3 pl-0" id="nav-left">
+      <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">{{request.user.username}}
+        {% if request.user.image %}
+        <img src="{{request.user.image.url}}" class="rounded-circle z-depth-0" height="30px" width="30px"
+          alt="avatar image">
+          {% else %}
+          <img class="rounded-circle z-depth-0"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmgQLi9YIA2uiwnuZ_LU_K-nOVMvilA2A5M2dNNescwKKBm6EI&s" height="30px" width="30px" alt="Avatar">
+          {% endif %}
       </a>
       <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
         <a class="dropdown-item" href="/employeeProfile"> <i class="far fa-user-circle mx-2"
@@ -96,11 +88,12 @@
         <a class="dropdown-item" href="/admin/intranet/user/add/"> <i class="far fa-plus-square mx-2"
             style="color:#0B920D;"></i> Add Employee</a>
         {% endif %}
+        <a class="dropdown-item" href="/accounts/password_reset"><i></i> <i class="fas fa-lock mx-2"
+            style="color:#0B920D;"></i>Change Password</a>
         <a class="dropdown-item" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt mx-2"
             style="color: rgb(165, 45, 45);"></i> Log out</a>
-
       </div>
     </ul>
   </div>
 </nav>
-<!--.Navbar -->
+<!--/.Navbar -->
